@@ -1,6 +1,8 @@
+
+
 describe('My First Test', () => {
     before(() => {
-        cy.setupMetamask();
+        // cy.setupMetamask();
       });
 
     it('Visits the Kitchen Sink', () => {

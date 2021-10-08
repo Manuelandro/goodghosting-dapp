@@ -5,13 +5,16 @@ import usePlayer from '../hooks/usePlayer'
 import useWithdraw from '../hooks/useWithdraw';
 
 const GameInfo: React.FC = () => {
-    const [join, error] = useApproveAndJoin()
+    const [join, joining, error] = useApproveAndJoin()
     const [player, fetchingPlayer] = usePlayer()
     const [withdraw] = useWithdraw()
 
+    /**
+     * render when fetching data from blo
+     */
     if (fetchingPlayer) {
         return (
-            <Card>
+            <Card bordered={false}>
                 <Row justify="center">
                     <Col>
                         <Spin size="large" />
@@ -23,6 +26,28 @@ const GameInfo: React.FC = () => {
             </Card>
         )
     }
+
+
+    /**
+     * render when user is joining the game
+     */
+    if (joining) {
+        return (
+            <Card bordered={false}>
+                <Row justify="center">
+                    <Col>
+                        <Spin size="large" />
+                    </Col>
+                </Row>
+                <Typography.Text>
+                    Please wait! We are setting up the game
+                </Typography.Text>
+            </Card>
+        )
+    }
+
+
+
 
     // player joined the game
     if (!player.withdrawn && Number(player.amountPaid) > 0) {

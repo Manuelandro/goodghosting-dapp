@@ -16,7 +16,6 @@ export type IState = Immutable<{
     networkName: string
     networkId: number
     noProvider: boolean
-    status: 'connected' | 'disconnected'
     web3: { [k: string]: any }
 }>
 
@@ -26,7 +25,6 @@ const initialState: IState = {
     networkName: '',
     networkId: 0,
     noProvider: false,
-    status: 'disconnected',
     web3: {},
 }
 
@@ -39,15 +37,10 @@ const NetworkReducer = produce((draft = initialState, { type, payload }) => {
         case C.SET_NETWORK:
             draft.networkName = networksMap[payload]
             draft.networkId = ~~payload
-            if (~~payload === 42) {
-                draft.status = 'connected'
-            } else {
-                draft.status = 'disconnected'
-            }
             break;
         case C.SET_ACCOUNT:
-                draft.accountAddress = payload
-                break
+            draft.accountAddress = payload
+            break
         case C.SET_NO_PROVIDER:
             draft.noProvider = true
             break

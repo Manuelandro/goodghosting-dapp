@@ -2,7 +2,6 @@ import produce, { Immutable } from 'immer'
 import * as C from '../constants'
 
 export type IState = Immutable<{
-    address: "0xc69a569405EAE312Ca13C2eD85a256FbE4992A35"
     approving: boolean
     contract: { [k: string]: any }
     fetchingPlayer: boolean
@@ -11,7 +10,6 @@ export type IState = Immutable<{
 
 
 const initialState: IState = {
-    address: "0xc69a569405EAE312Ca13C2eD85a256FbE4992A35",
     approving: false,
     contract: {},
     fetchingPlayer: true,

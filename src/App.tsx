@@ -10,12 +10,10 @@ import Network from './components/Network'
 import GameInfo from './components/GameInfo';
 
 // hooks
-import useGameContract from './hooks/useGameContract'
 import useMetaMask from './hooks/useMetaMask';
 
 
 const App: React.FC = () => {
-  useGameContract()
   const [noProvider] = useMetaMask()
 
   //
