@@ -1,15 +1,17 @@
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as C from '../store/constants'
 import { RootState } from '../store/reducers'
 import DAICONTRACT from '../abi/ABI-dai'
 
 
-export default function useApproveAndJoin(): [() => void] {
+export default function useApproveAndJoin(): [() => void, boolean] {
     const dispatch = useDispatch()
     const web3 = useSelector((s: RootState) => s.network.web3)
     const accountAddress = useSelector((s: RootState) => s.network.accountAddress)
     const gameContract = useSelector((s: RootState) => s.game.contract)
     const gameAddress = useSelector((s: RootState) => s.game.address)
+    const [error, setError] = useState(false)
 
     async function join(): Promise<void> {
         if (
@@ -17,6 +19,8 @@ export default function useApproveAndJoin(): [() => void] {
             !Object.keys(gameContract).length ||
             !accountAddress.length
         ) return
+
+        setError(false)
 
         try {
             dispatch({ type: C.SET_APPROVING, payload: true })
@@ -32,8 +36,8 @@ export default function useApproveAndJoin(): [() => void] {
 
         } catch (err: any) {
             console.log(err)
-            if (err.code === 4001) {
-                return
+            if (err.code !== 4001) {
+                setError(true)
             }
         } finally {
             dispatch({ type: C.SET_APPROVING, payload: false })
@@ -42,5 +46,5 @@ export default function useApproveAndJoin(): [() => void] {
 
     }
 
-    return [join]
+    return [join, error]
 }

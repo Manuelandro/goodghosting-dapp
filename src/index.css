@@ -34,16 +34,24 @@ code {
   color: #61dafb;
 }
 
-[data-id="game-info"] {
+[data-testid="network-info"] .ant-typography {
+  font-size: 16px;
+}
+
+[data-testid="game-info"] {
   width: 60%;
 }
 
-[data-id="game-info"] .ant-row {
+[data-testid="game-info"] .ant-row {
   border-bottom: 1px solid #ededed;
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
 
-[data-id="game-info"] .ant-col {
+[data-testid="game-info"] .ant-col {
   text-align: left;
+}
+
+[data-testid="join-card"] .ant-row {
+  margin-bottom: 20px;
 }

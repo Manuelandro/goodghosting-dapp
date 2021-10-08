@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, Spin, Row, Col, Card, Typography } from 'antd';
+import { Button, Spin, Row, Col, Card, Typography, Alert } from 'antd';
 import useApproveAndJoin from '../hooks/useApproveAndJoin'
 import usePlayer from '../hooks/usePlayer'
 import useWithdraw from '../hooks/useWithdraw';
 
 const GameInfo: React.FC = () => {
-    const [join] = useApproveAndJoin()
+    const [join, error] = useApproveAndJoin()
     const [player, fetchingPlayer] = usePlayer()
     const [withdraw] = useWithdraw()
 
@@ -27,7 +27,7 @@ const GameInfo: React.FC = () => {
     // player joined the game
     if (!player.withdrawn && Number(player.amountPaid) > 0) {
         return (
-            <Card data-id="game-info">
+            <Card data-testid="game-info">
                 <Typography.Title level={2}>Your Game Info</Typography.Title>
                 <Row gutter={[20, 20]}>
                     <Col span={12}>
@@ -75,7 +75,18 @@ const GameInfo: React.FC = () => {
     }
 
     return (
-        <Button onClick={join} data-testid="joinbutt">Join Our Game</Button>
+        <Card data-testid="join-card" bordered={false}>
+            <Row justify="center">
+                <Col>
+                    <Button onClick={join} data-testid="joinbutt">Join Our Game</Button>
+                </Col>
+            </Row>
+            {error ? (
+                <Row>
+                    <Col><Alert message="Oh! It looks like we had some problem! :( plesase try again" type="error" /></Col>
+                </Row>
+            ) : null}
+        </Card>
     )
 }
 

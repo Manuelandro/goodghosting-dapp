@@ -52,7 +52,7 @@ test("the app should render the info screen", async () => {
 
     const pp = screen.getByTestId("app")
     console.log(store.getState())
-    const UserInfo = screen.getByTestId("user-info")
+    const UserInfo = screen.getByTestId("network-info")
     expect(UserInfo).toBeInTheDocument()
 
 })

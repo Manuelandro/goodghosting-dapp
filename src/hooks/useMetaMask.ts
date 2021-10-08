@@ -57,13 +57,6 @@ export default function useMetaMask(): [boolean] {
             window.ethereum.on('networkChanged', function(networkId: number){
               dispatch({ type: C.SET_NETWORK, payload: networkId })
             });
-
-            if (id !== 42) {
-              await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x2A' }],
-              });
-            }
         })()
       }, [web3])
 

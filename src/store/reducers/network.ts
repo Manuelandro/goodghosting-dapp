@@ -38,8 +38,8 @@ const NetworkReducer = produce((draft = initialState, { type, payload }) => {
             break
         case C.SET_NETWORK:
             draft.networkName = networksMap[payload]
-            draft.networkId = payload
-            if (payload === 42) {
+            draft.networkId = ~~payload
+            if (~~payload === 42) {
                 draft.status = 'connected'
             } else {
                 draft.status = 'disconnected'
