@@ -25,7 +25,7 @@ const GameInfo: React.FC = () => {
     }
 
     // player joined the game
-    // if (!player.withdrawn && Number(player.amountPaid) > 0) {
+    if (!player.withdrawn && Number(player.amountPaid) > 0) {
         return (
             <Card data-id="game-info">
                 <Typography.Title level={2}>Your Game Info</Typography.Title>
@@ -72,7 +72,7 @@ const GameInfo: React.FC = () => {
                 <Button onClick={withdraw} data-testid="withdrawbutt">Withdraw</Button>
             </Card>
         )
-    // }
+    }
 
     return (
         <Button onClick={join} data-testid="joinbutt">Join Our Game</Button>
