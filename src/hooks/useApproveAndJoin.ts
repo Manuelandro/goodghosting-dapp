@@ -9,11 +9,12 @@ const daiAddress = "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD"
 const gameAddress = "0xc69a569405EAE312Ca13C2eD85a256FbE4992A35"
 
 
-export default function useApproveAndJoin(): [() => void, boolean, boolean] {
+export default function useApproveAndJoin(): [() => void, boolean, number | null, boolean] {
     const dispatch = useDispatch()
     const web3 = useSelector((s: RootState) => s.network.web3)
     const accountAddress = useSelector((s: RootState) => s.network.accountAddress)
     const gameContract = useSelector((s: RootState) => s.game.contract)
+    const currentSegment = useSelector((s: RootState) => s.game.currentSegment)
     const joining = useSelector((s: RootState) => s.game.joining)
     const [error, setError] = useState(false)
 
@@ -22,6 +23,16 @@ export default function useApproveAndJoin(): [() => void, boolean, boolean] {
 
         const goodGhostingContract = new web3.eth.Contract(SmartContractABI, gameAddress)
         dispatch({ type: C.SET_GAME_CONTRACT, payload: goodGhostingContract })
+
+        ;(async function() {
+            try {
+                const currentSegment = await goodGhostingContract.methods.getCurrentSegment().call()
+                dispatch({ type: C.SET_GAME_SEGMENT, payload: currentSegment })
+            } catch (err) {
+                console.log(err)
+            }
+        })()
+
     }, [web3?.version])
 
     async function join(): Promise<void> {
@@ -41,9 +52,7 @@ export default function useApproveAndJoin(): [() => void, boolean, boolean] {
             dispatch({ type: C.SET_APPROVING, payload: false })
             dispatch({ type: C.SET_JOINING, payload: true })
 
-            const res = await gameContract.methods.joinGame().send({ from: accountAddress })
-            console.log(res)
-
+            await gameContract.methods.joinGame().send({ from: accountAddress })
         } catch (err: any) {
             console.log(err)
             if (err.code !== 4001) {
@@ -56,5 +65,5 @@ export default function useApproveAndJoin(): [() => void, boolean, boolean] {
 
     }
 
-    return [join, joining, error]
+    return [join, joining, currentSegment, error]
 }

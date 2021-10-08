@@ -4,6 +4,7 @@ import * as C from '../constants'
 export type IState = Immutable<{
     approving: boolean
     contract: { [k: string]: any }
+    currentSegment: number | null
     fetchingPlayer: boolean
     joining: boolean
 }>
@@ -12,6 +13,7 @@ export type IState = Immutable<{
 const initialState: IState = {
     approving: false,
     contract: {},
+    currentSegment: null,
     fetchingPlayer: true,
     joining: false
 }
@@ -24,6 +26,9 @@ const GameReducer = produce((draft = initialState, { type, payload }) => {
             break
         case C.SET_GAME_CONTRACT:
             draft.contract = payload
+            break
+        case C.SET_GAME_SEGMENT:
+            draft.currentSgmet = payload
             break
         case C.SET_FETCHING:
             draft.fetchingPlayer = payload

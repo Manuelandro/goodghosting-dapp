@@ -1,6 +1,7 @@
 export const SET_ACCOUNT = 'SET_ACCOUNT'
 export const SET_APPROVING = 'SET_APPROVING'
 export const SET_GAME_CONTRACT = 'SET_GAME_CONTRACT'
+export const SET_GAME_SEGMENT = 'SET_GAME_SEGMENT'
 export const SET_FETCHING = 'SET_FETCHING'
 export const SET_JOINING = 'SET_JOINING'
 export const SET_NETWORK = 'SET_NETWORK'

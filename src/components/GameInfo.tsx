@@ -2,12 +2,12 @@ import React from 'react'
 import { Button, Spin, Row, Col, Card, Typography, Alert } from 'antd';
 import useApproveAndJoin from '../hooks/useApproveAndJoin'
 import usePlayer from '../hooks/usePlayer'
-import useWithdraw from '../hooks/useWithdraw';
+import useEarlyWithdraw from '../hooks/useEarlyWithdraw';
 
 const GameInfo: React.FC = () => {
-    const [join, joining, error] = useApproveAndJoin()
+    const [join, joining, currentSegment, error] = useApproveAndJoin()
     const [player, fetchingPlayer] = usePlayer()
-    const [withdraw] = useWithdraw()
+    const [withdraw] = useEarlyWithdraw()
 
     /**
      * render when fetching data from blo
@@ -49,8 +49,11 @@ const GameInfo: React.FC = () => {
 
 
 
-    // player joined the game
-    if (!player.withdrawn && Number(player.amountPaid) > 0) {
+    /**
+     * note that when user withdraw the variable is set to true
+     * even if user rejoin, so I must check withdran false to render the info
+     */
+    if (!player.withdrawn && ~~player.mostRecentSegmentPaid === currentSegment) {
         return (
             <Card data-testid="game-info">
                 <Typography.Title level={2}>Your Game Info</Typography.Title>
@@ -95,6 +98,23 @@ const GameInfo: React.FC = () => {
                     </Col>
                 </Row>
                 <Button onClick={withdraw} data-testid="withdrawbutt">Withdraw</Button>
+            </Card>
+        )
+    }
+
+    if (player.withdrawn && player.canRejoin) {
+        return (
+            <Card data-testid="rejoin-card" bordered={false}>
+                <Row>
+                    <Col>
+                        <Typography.Text>Hey there! Wanna rejoin the game?</Typography.Text>
+                    </Col>
+                </Row>
+                <Row justify="center">
+                    <Col>
+                        <Button onClick={join} data-testid="joinbutt">Rejoin Game</Button>
+                    </Col>
+                </Row>
             </Card>
         )
     }

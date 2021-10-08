@@ -26,7 +26,9 @@ const Network: React.FC = () => {
               <Typography.Text strong>Network:</Typography.Text>{' '}
               <Typography.Text>{networkName}</Typography.Text>{' '}
               <Badge color={'green'} text="" />{' '}
-              {networkId !== 42 ? <Button onClick={change} size="small" type="primary">Change to Kovan</Button> : null}
+              {networkId > 0 && networkId !== 42
+                    ? <Button onClick={change} size="small" type="primary">Change to Kovan</Button>
+                    : null}
             </Col>
             <Col span={24}>
             <Typography.Text strong>Account:</Typography.Text>{' '}
