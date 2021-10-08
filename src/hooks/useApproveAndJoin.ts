@@ -9,7 +9,7 @@ const daiAddress = "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD"
 const gameAddress = "0xc69a569405EAE312Ca13C2eD85a256FbE4992A35"
 
 
-export default function useApproveAndJoin(): [() => void, boolean, number | null, boolean] {
+export default function useApproveAndJoin(): [() => void, boolean, boolean] {
     const dispatch = useDispatch()
     const web3 = useSelector((s: RootState) => s.network.web3)
     const accountAddress = useSelector((s: RootState) => s.network.accountAddress)
@@ -23,15 +23,6 @@ export default function useApproveAndJoin(): [() => void, boolean, number | null
 
         const goodGhostingContract = new web3.eth.Contract(SmartContractABI, gameAddress)
         dispatch({ type: C.SET_GAME_CONTRACT, payload: goodGhostingContract })
-
-        ;(async function() {
-            try {
-                const currentSegment = await goodGhostingContract.methods.getCurrentSegment().call()
-                dispatch({ type: C.SET_GAME_SEGMENT, payload: currentSegment })
-            } catch (err) {
-                console.log(err)
-            }
-        })()
 
     }, [web3?.version])
 
@@ -65,5 +56,5 @@ export default function useApproveAndJoin(): [() => void, boolean, number | null
 
     }
 
-    return [join, joining, currentSegment, error]
+    return [join, joining, error]
 }

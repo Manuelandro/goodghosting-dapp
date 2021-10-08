@@ -38,9 +38,11 @@ test("the app should render the Install Metamask Screen", async () => {
 
 
 
-test("the app should render the info screen", async () => {
+test("the app should render the network screen and the join game button", async () => {
     window.ethereum = {
-        enable: () => new Promise(resolve => resolve(true))
+        enable: () => new Promise(resolve => resolve(true)),
+        request: () => new Promise(resolve => resolve(true)),
+        send: () => new Promise(resolve => resolve(true))
     }
     const store = configureStore()
 
@@ -50,10 +52,70 @@ test("the app should render the info screen", async () => {
         </Provider>
     )
 
-    const pp = screen.getByTestId("app")
-    console.log(store.getState())
     const UserInfo = screen.getByTestId("network-info")
     expect(UserInfo).toBeInTheDocument()
 
+    store.dispatch({
+        type: C.SET_PLAYER,
+        payload: {
+            amountPaid: 0,
+            canRejoin: false,
+            mostRecentSegmentPaid: null,
+            withdrawn: false
+        }
+    })
+
+
+    const JoinButton = screen.getByTestId("joinbutt")
+    expect(JoinButton).toBeInTheDocument()
+
 })
 
+
+test("the app should render the game info if the user is set", async () => {
+    window.ethereum = {
+        enable: () => new Promise(resolve => resolve(true)),
+        request: () => new Promise(resolve => resolve(true)),
+        send: () => new Promise(resolve => resolve(true))
+    }
+
+
+    const store = configureStore()
+
+    render(
+        <Provider store={store}>
+            <App />
+        </Provider>
+    )
+
+    store.dispatch({
+        type: C.SET_PLAYER,
+        payload: {
+            addr: '0x90E7F77FD4D30ab70B1d63d83796F682144369b3',
+            amountPaid: 10 ** 18,
+            canRejoin: false,
+            mostRecentSegmentPaid: '0',
+            withdrawn: false
+        }
+    })
+
+    const GameInfo = screen.getByTestId("game-info")
+    expect(GameInfo).toBeInTheDocument()
+
+
+    const addrValue = screen.getByTestId('addr-value')
+    expect(addrValue).toHaveTextContent('0x90E7F77FD4D30ab70B1d63d83796F682144369b3')
+
+    const amountValue = screen.getByTestId('amountpaid-value')
+    expect(amountValue).toHaveTextContent(String(10**18))
+
+    const canrejoinValue = screen.getByTestId('canrejoin-value')
+    expect(canrejoinValue).toHaveTextContent('false')
+
+    const mostrecentValue = screen.getByTestId('mostrecent-value')
+    expect(mostrecentValue).toHaveTextContent('0')
+
+    const withdrawnValue = screen.getByTestId('withdrawn-value')
+    expect(withdrawnValue).toHaveTextContent('false')
+
+})

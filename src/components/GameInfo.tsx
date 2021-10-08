@@ -5,7 +5,7 @@ import usePlayer from '../hooks/usePlayer'
 import useEarlyWithdraw from '../hooks/useEarlyWithdraw';
 
 const GameInfo: React.FC = () => {
-    const [join, joining, currentSegment, error] = useApproveAndJoin()
+    const [join, joining, error] = useApproveAndJoin()
     const [player, fetchingPlayer] = usePlayer()
     const [withdraw] = useEarlyWithdraw()
 
@@ -53,7 +53,7 @@ const GameInfo: React.FC = () => {
      * note that when user withdraw the variable is set to true
      * even if user rejoin, so I must check withdran false to render the info
      */
-    if (!player.withdrawn && ~~player.mostRecentSegmentPaid === currentSegment) {
+    if (!player.withdrawn && player.amountPaid === 10 ** 18) {
         return (
             <Card data-testid="game-info">
                 <Typography.Title level={2}>Your Game Info</Typography.Title>
@@ -61,7 +61,7 @@ const GameInfo: React.FC = () => {
                     <Col span={12}>
                         <strong>addr</strong>
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} data-testid="addr-value">
                         {player.addr}
                     </Col>
                 </Row>
@@ -69,15 +69,15 @@ const GameInfo: React.FC = () => {
                     <Col span={12}>
                         <strong>withdrawn</strong>
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} data-testid="withdrawn-value">
                         {String(player.withdrawn)}
                     </Col>
                 </Row>
                 <Row gutter={[20, 20]}>
-                    <Col span={12}>
+                    <Col span={12} >
                         <strong>canRejoin</strong>
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} data-testid="canrejoin-value">
                         {String(player.canRejoin)}
                     </Col>
                 </Row>
@@ -85,7 +85,7 @@ const GameInfo: React.FC = () => {
                     <Col span={12}>
                         <strong>mostRecentSegmentPaid</strong>
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} data-testid="mostrecent-value">
                         {player.mostRecentSegmentPaid}
                     </Col>
                 </Row>
@@ -93,7 +93,7 @@ const GameInfo: React.FC = () => {
                     <Col span={12}>
                         <strong>amountPaid</strong>
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} data-testid="amountpaid-value">
                         {player.amountPaid}
                     </Col>
                 </Row>
