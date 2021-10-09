@@ -92,12 +92,13 @@ test("the app should render the game info if the user is set", async () => {
         type: C.SET_PLAYER,
         payload: {
             addr: '0x90E7F77FD4D30ab70B1d63d83796F682144369b3',
-            amountPaid: 10 ** 18,
+            amountPaid: String(10 ** 18),
             canRejoin: false,
             mostRecentSegmentPaid: '0',
             withdrawn: false
         }
     })
+
 
     const GameInfo = screen.getByTestId("game-info")
     expect(GameInfo).toBeInTheDocument()

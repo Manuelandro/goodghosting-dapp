@@ -1,6 +1,4 @@
 /// <reference types="cypress" />
-// import helpers from "../support/helpers";
-require('dotenv').config()
 const helpers = require('../support/helpers')
 const puppeteer = require('../support/puppeteer');
 const metamask = require('../support/metamask');
