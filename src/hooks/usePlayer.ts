@@ -11,12 +11,19 @@ export default function usePlayer(): [Record<string, any>, boolean] {
     const player = useSelector((s: RootState) => s.player)
 
     useEffect(() => {
-        if (!Object.keys(gameContract).length || !accountAddress.length) return
+        if (
+            !Object.keys(gameContract).length ||
+            !accountAddress.length
+        ) return
 
         ;(async function() {
-            const player = await gameContract.methods.players(accountAddress).call()
-            dispatch({ type: C.SET_PLAYER, payload: player })
-        }())
+            try {
+                const player = await gameContract.methods.players(accountAddress).call()
+                dispatch({ type: C.SET_PLAYER, payload: player })
+            } catch (err) {
+                console.log(err)
+            }
+        })()
     }, [gameContract?._address, accountAddress])
 
 

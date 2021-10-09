@@ -14,7 +14,6 @@ export default function useApproveAndJoin(): [() => void, boolean, boolean] {
     const web3 = useSelector((s: RootState) => s.network.web3)
     const accountAddress = useSelector((s: RootState) => s.network.accountAddress)
     const gameContract = useSelector((s: RootState) => s.game.contract)
-    const currentSegment = useSelector((s: RootState) => s.game.currentSegment)
     const joining = useSelector((s: RootState) => s.game.joining)
     const [error, setError] = useState(false)
 

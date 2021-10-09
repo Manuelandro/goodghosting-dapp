@@ -33,8 +33,8 @@ export default function useMetaMask(): [boolean] {
 
 
     /**
-     * get network and account info
-     * ask the user to switch network if it is wrong
+     * get network and address info
+     * detect changes of network or account
      */
     useEffect(() => {
       if (!web3?.version?.length) return

@@ -6,6 +6,7 @@ export type IState = Immutable<{
     contract: { [k: string]: any }
     fetchingPlayer: boolean
     joining: boolean
+    joined: boolean
 }>
 
 
@@ -13,7 +14,8 @@ const initialState: IState = {
     approving: false,
     contract: {},
     fetchingPlayer: true,
-    joining: false
+    joining: false,
+    joined: false
 }
 
 

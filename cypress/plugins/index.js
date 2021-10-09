@@ -56,7 +56,11 @@ module.exports = (on, config) => {
       const accepted = await metamask.acceptAccess();
       return accepted;
     },
-    async confirmMetamaskTransaction() {
+    async confirmDaiContractTransaction() {
+      const confirmed = await metamask.confirmTransaction();
+      return confirmed;
+    },
+    async goodGhostingTransaction() {
       const confirmed = await metamask.confirmTransaction();
       return confirmed;
     },

@@ -53,7 +53,7 @@ const GameInfo: React.FC = () => {
      * note that when user withdraw the variable is set to true
      * even if user rejoin, so I must check withdran false to render the info
      */
-    if (!player.withdrawn && player.amountPaid === 10 ** 18) {
+    if (!player.withdrawn && player.amountPaid === String(10 ** 18)) {
         return (
             <Card data-testid="game-info">
                 <Typography.Title level={2}>Your Game Info</Typography.Title>
