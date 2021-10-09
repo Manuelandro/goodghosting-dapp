@@ -25,4 +25,10 @@ describe('User can load page', () => {
       cy.get("[data-testid=game-info]").should('exist')
     })
 
+    it('should click on earaly withdraw and accept the transaction', () => {
+      cy.get('.withdraw').click()
+      cy.goodGhostingTransaction()
+      cy.get("[data-testid=joinbutt]").should('exist')
+    })
+
   })

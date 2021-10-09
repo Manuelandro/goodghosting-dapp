@@ -116,7 +116,7 @@ const GameInfo: React.FC = () => {
                         {player.amountPaid}
                     </Col>
                 </Row>
-                <Button onClick={withdraw} data-testid="withdrawbutt">Withdraw</Button>
+                <Button onClick={withdraw} data-testid="withdrawbutt" className='withdraw'>Withdraw</Button>
             </Card>
         )
     }
@@ -131,7 +131,7 @@ const GameInfo: React.FC = () => {
                 </Row>
                 <Row justify="center">
                     <Col>
-                        <Button onClick={join} data-testid="joinbutt">Rejoin Game</Button>
+                        <Button onClick={join} data-testid="joinbutt" className="join">Rejoin Game</Button>
                     </Col>
                 </Row>
             </Card>

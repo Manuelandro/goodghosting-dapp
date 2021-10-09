@@ -42,6 +42,12 @@ code {
   width: 60%;
 }
 
+@media only screen and (max-width: 1080px) {
+  [data-testid="game-info"] {
+    width: 80%;
+  }
+}
+
 [data-testid="game-info"] .ant-row {
   border-bottom: 1px solid #ededed;
   margin-bottom: 10px;
