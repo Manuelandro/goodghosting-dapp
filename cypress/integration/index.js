@@ -14,9 +14,10 @@ describe('User can load page', () => {
     })
 
 
-    it('should click on join game', () => {
+    it('should click on join game and accept the contract', () => {
       cy.get('.join').click()
       cy.confirmMetamaskTransaction()
+      cy.get("[data-testid=joining-screen]").should('exist')
     })
 
   })

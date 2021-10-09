@@ -66,7 +66,7 @@ module.exports = {
     // metamask reloads popup after changing a fee, you have to wait for this event otherwise transaction will fail
     await puppeteer.metamaskWindow().waitForTimeout(3000);
     await puppeteer.waitAndClick('button.btn-primary', notificationPage);
-    await puppeteer.metamaskWindow().waitForTimeout(3000);
+    await puppeteer.metamaskWindow().waitForTimeout(6000);
     return true;
   },
   async initialSetup() {

@@ -14,7 +14,7 @@ const GameInfo: React.FC = () => {
      */
     if (fetchingPlayer) {
         return (
-            <Card bordered={false}>
+            <Card bordered={false} data-testid="retrieving-screen">
                 <Row justify="center">
                     <Col>
                         <Spin size="large" />
@@ -33,7 +33,7 @@ const GameInfo: React.FC = () => {
      */
     if (joining) {
         return (
-            <Card bordered={false}>
+            <Card bordered={false} data-testid="joining-screen">
                 <Row justify="center">
                     <Col>
                         <Spin size="large" />
