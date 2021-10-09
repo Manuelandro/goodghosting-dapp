@@ -12,9 +12,6 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.16.13",
-    "axios": "^0.22.0",
-    "cross-zip": "^4.0.0",
-    "ethers": "^5.4.7",
     "immer": "^9.0.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -28,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "cy": "CYPRESS_REMOTE_DEBUGGING_PORT=9222 cypress run --headed"
+    "cy": "CYPRESS_REMOTE_DEBUGGING_PORT=9222 cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -49,7 +46,11 @@
     ]
   },
   "devDependencies": {
+    "cross-zip": "^4.0.0",
     "cypress": "^8.5.0",
+    "cypress-metamask": "^1.0.5-development",
+    "dotenv": "^10.0.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "jest": "26.6.0",
     "node-fetch": "^3.0.0",
     "puppeteer-core": "^10.4.0",

@@ -1,9 +1,6 @@
 {
     "baseUrl": "http://localhost:3000",
+    "chromeWebSecurity": true,
     "projectId": "noiqfs",
-    "videoUploadOnPasses": false,
-    "env": {
-      "ETH_PROVIDER": "http://localhost:8545",
-      "TRADE_TIMEOUT": 40000
-    }
+    "videoUploadOnPasses": false
   }

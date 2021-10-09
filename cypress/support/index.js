@@ -1,9 +1,16 @@
 import './commands';
-import { configure } from '@testing-library/cypress';
+Cypress.on('window:before:load', win => {
+  cy.stub(win.console, 'error').callsFake(message => {
+    cy.now('task', 'error', message);
+  });
 
-configure({ testIdAttribute: 'data-testid' });
-
+  cy.stub(win.console, 'warn').callsFake(message => {
+    cy.now('task', 'warn', message);
+  });
+});
 
 before(() => {
-    cy.setupMetamask('word1, word2, etc..', 'mainnet', 'password');
-  });
+  cy.setupMetamask()
+});
+
+

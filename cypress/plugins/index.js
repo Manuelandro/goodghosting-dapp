@@ -1,90 +1,75 @@
-const axios = require('axios');
-const path = require('path');
-const zip = require('cross-zip');
-const fs = require('fs');
-
+/// <reference types="cypress" />
+// import helpers from "../support/helpers";
+require('dotenv').config()
+const helpers = require('../support/helpers')
+const puppeteer = require('../support/puppeteer');
+const metamask = require('../support/metamask');
+/**
+ * @type {Cypress.PluginConfig}
+ */
+// eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-
   on('before:browser:launch', async (browser = {}, arguments_) => {
+    if (browser.name === 'chrome' && browser.isHeadless) {
+      console.log('TRUE'); // required by cypress ¯\_(ツ)_/¯
+      arguments_.args.push('--window-size=1920,1080');
+      return arguments_;
+    }
+
+    if (browser.name === 'electron') {
+      arguments_['width'] = 1920;
+      arguments_['height'] = 1080;
+      arguments_['resizable'] = false;
+      return arguments_;
+    }
+
+    // metamask welcome screen blocks cypress from loading
+    if (browser.name === 'chrome') {
+      arguments_.args.push(
+        // '--auto-open-devtools-for-tabs',
+        '--remote-debugging-port=9222',
+        '--disable-background-timer-throttling',
+        '--disable-backgrounding-occluded-windows',
+        '--disable-renderer-backgrounding',
+      );
+    }
+
     // NOTE: extensions cannot be loaded in headless Chrome
-    const metamaskPath = await prepareMetamask();
+    const metamaskPath = await helpers.prepareMetamask(
+      'latest' || '9.4.0',
+    );
     arguments_.extensions.push(metamaskPath);
     return arguments_;
-  })
+  });
+
 
   on('task', {
-    setupMetamask: async ({
-      secretWordsOrPrivateKey,
-      network = 'kovan',
-      password,
-    }) => {
-      if (process.env.NETWORK_NAME) {
-        network = process.env.NETWORK_NAME;
-      }
-      if (process.env.PRIVATE_KEY) {
-        secretWordsOrPrivateKey = process.env.PRIVATE_KEY;
-      }
-      if (process.env.SECRET_WORDS) {
-        secretWordsOrPrivateKey = process.env.SECRET_WORDS;
-      }
-      await metamask.initialSetup({
-        secretWordsOrPrivateKey,
-        network,
-        password,
-      });
+    error(message) {
+      console.error('\u001B[31m', 'ERROR:', message, '\u001B[0m');
       return true;
     },
-  })
-}
+    warn(message) {
+      console.warn('\u001B[33m', 'WARNING:', message, '\u001B[0m');
+      return true;
+    },
+    async acceptMetamaskAccess() {
+      const accepted = await metamask.acceptAccess();
+      return accepted;
+    },
+    async confirmMetamaskTransaction() {
+      const confirmed = await metamask.confirmTransaction();
+      return confirmed;
+    },
+    async setupMetamask() {
+      if (puppeteer.metamaskWindow()) {
+        await puppeteer.switchToCypressWindow();
+        return true
+      } else {
+        await metamask.initialSetup();
+        return true;
+      }
+    },
+  });
 
-
-async function prepareMetamask() {
-  const release = await getMetamaskReleases();
-  const downloadsDirectory = path.resolve(__dirname, 'downloads');
-  if (!fs.existsSync(downloadsDirectory)) {
-    fs.mkdirSync(downloadsDirectory);
-  }
-  const downloadDestination = path.join(downloadsDirectory, release.filename);
-  await download(release.downloadUrl, downloadDestination);
-  const metamaskDirectory = path.join(downloadsDirectory, 'metamask');
-  await extract(downloadDestination, metamaskDirectory);
-  return metamaskDirectory;
-}
-
-
-async function getMetamaskReleases(version) {
-  let filename;
-  let downloadUrl;
-
-  const response = await axios.get(
-    'https://api.github.com/repos/metamask/metamask-extension/releases',
-  );
-
-  if (version === 'latest' || !version) {
-    filename = response.data[0].assets[0].name;
-    downloadUrl = response.data[0].assets[0].browser_download_url;
-  } else if (version) {
-    filename = `metamask-chrome-${version}.zip`;
-    downloadUrl = `https://github.com/MetaMask/metamask-extension/releases/download/v${version}/metamask-chrome-${version}.zip`;
-  }
-
-  return {
-    filename,
-    downloadUrl,
-  };
-}
-
-async function download (url, destination) {
-    const writer = fs.createWriteStream(destination);
-    const result = await axios({
-      url,
-      method: 'GET',
-      responseType: 'stream',
-    });
-    await new Promise(resolve =>
-      result.data.pipe(writer).on('finish', resolve),
-    );
-  }
-async function extract(file, destination) {
-  await zip.unzip(file, destination);
+  return config;
 }

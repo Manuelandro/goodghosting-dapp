@@ -123,7 +123,7 @@ const GameInfo: React.FC = () => {
         <Card data-testid="join-card" bordered={false}>
             <Row justify="center">
                 <Col>
-                    <Button onClick={join} data-testid="joinbutt">Join Our Game</Button>
+                    <Button onClick={join} data-testid="joinbutt" className="join">Join Our Game</Button>
                 </Col>
             </Row>
             {error ? (
