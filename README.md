@@ -1,6 +1,6 @@
-# GoodGhosting FE Challange
+# GoodGhosting FE
 
-Hi there, this is my solution for the challange
+Hi there, this is my solution for the dApp
 
 ## Available Scripts
 
@@ -22,8 +22,8 @@ Please read the CYPRESS section
 ## Details
 
 `GENERAL`
-For the sake of semplicity I bootstrapped the application with create-react-app. Then I added
-typescript (just typed the surface, we can do a lot more), redux with immer for immutability and web3.
+For the sake of simplicity I bootstrapped the application with create-react-app. Then I added
+typescript (just typed the surface, we can do a lot more), redux with immer for immutability and web3js.
 The architecture is very simple in this light app, i put in different location the components,
 the redux flow and the hooks which are responsible for the logic and the side effects (I prefer
 to have different small hooks that talk to each other rather than few giant unreadable files).
