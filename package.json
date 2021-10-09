@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "axios": "^0.22.0",
     "cross-zip": "^4.0.0",
     "cypress": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
