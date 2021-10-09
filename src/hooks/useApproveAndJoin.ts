@@ -43,6 +43,7 @@ export default function useApproveAndJoin(): [() => void, boolean, boolean] {
             dispatch({ type: C.SET_JOINING, payload: true })
 
             await gameContract.methods.joinGame().send({ from: accountAddress })
+            dispatch({ type: C.SET_FETCHING, payload: true })
         } catch (err: any) {
             console.log(err)
             if (err.code !== 4001) {

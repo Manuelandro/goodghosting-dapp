@@ -7,7 +7,7 @@ import useEarlyWithdraw from '../hooks/useEarlyWithdraw';
 const GameInfo: React.FC = () => {
     const [join, joining, error] = useApproveAndJoin()
     const [player, fetchingPlayer] = usePlayer()
-    const [withdraw] = useEarlyWithdraw()
+    const [withdraw, withdrawing] = useEarlyWithdraw()
 
     /**
      * render when fetching data from blo
@@ -41,6 +41,25 @@ const GameInfo: React.FC = () => {
                 </Row>
                 <Typography.Text>
                     Please wait! We are setting up the game
+                </Typography.Text>
+            </Card>
+        )
+    }
+
+
+    /**
+     * render when user is early withdrawing
+     */
+     if (withdrawing) {
+        return (
+            <Card bordered={false} data-testid="joining-screen">
+                <Row justify="center">
+                    <Col>
+                        <Spin size="large" />
+                    </Col>
+                </Row>
+                <Typography.Text>
+                    We are calculating how much you get back....
                 </Typography.Text>
             </Card>
         )

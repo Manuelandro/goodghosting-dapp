@@ -31,3 +31,6 @@ to have different small hooks that talk to each other rather than few giant unre
 Handle browers extentions in a headless environment was a bit tricky; my solution is heavly
 inspired by Synpress. The whole idea is to download and unzip the metamask package locally,
 and run it in a new window as another test pages. Please remember that because sometimes blockchain process transactions slower, I hade to put different "wait" tasks in order to be sure that the UI is updated accordly to what we expect from the test. So don't be hurry, it may take a while :)
+
+`CASES COVERED`
+• User does not have metama

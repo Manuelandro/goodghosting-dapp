@@ -7,6 +7,7 @@ export type IState = Immutable<{
     fetchingPlayer: boolean
     joining: boolean
     joined: boolean
+    withdrawing: boolean
 }>
 
 
@@ -15,7 +16,8 @@ const initialState: IState = {
     contract: {},
     fetchingPlayer: true,
     joining: false,
-    joined: false
+    joined: false,
+    withdrawing: false,
 }
 
 
@@ -35,6 +37,13 @@ const GameReducer = produce((draft = initialState, { type, payload }) => {
             break
         case C.SET_JOINING:
             draft.joining = payload
+            break
+        case C.SET_WITHDRAWING:
+            draft.withdrawing = true
+            break
+        case C.SET_WITHDRAWN:
+            draft.withdrawing = false
+            draft.fetchingPlayer = true;
             break
         default:
             return draft

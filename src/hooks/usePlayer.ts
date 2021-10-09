@@ -13,7 +13,8 @@ export default function usePlayer(): [Record<string, any>, boolean] {
     useEffect(() => {
         if (
             !Object.keys(gameContract).length ||
-            !accountAddress.length
+            !accountAddress.length ||
+            !fetchingPlayer
         ) return
 
         ;(async function() {
@@ -24,7 +25,7 @@ export default function usePlayer(): [Record<string, any>, boolean] {
                 console.log(err)
             }
         })()
-    }, [gameContract?._address, accountAddress])
+    }, [gameContract?._address, accountAddress, fetchingPlayer])
 
 
     return [player, fetchingPlayer]
