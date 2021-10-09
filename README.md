@@ -32,14 +32,14 @@ to have different small hooks that talk to each other rather than few giant unre
 Handle browers extentions in a headless environment was a bit tricky; my solution is heavly
 inspired by [Synpress](https://github.com/Synthetixio/synpress). The whole idea is to download and unzip the metamask package locally,
 and run it in a new window as another test pages.
-For the mptivation upon, test are intendend to run one time (ideally in a pipeline). If you want to re-run the tests you should stop it and run again the yarn cy command.
+For the motivation upon, test are intendend to run one time (ideally in a pipeline). If you want to re-run the tests you should stop it and run again the yarn cy command.
 **Please remember** that because sometimes blockchain transactions can be very slow, I hade to put **22 seconds** wait after every transaction confirmation to be sure that the UI is updated accordly to what we expect from the test. So don't hurry, it may take a while :)
 
 `CASES COVERED`
 
 - User does not have metamask or is inactive to the page
 - User never joined the game
-- User has joined the game in the past and can rejoin
+- User joined the game in the past and can rejoin
 - User accept the dai contract
 - User accept the transaction to join the game
 - User early withdraw from the game
