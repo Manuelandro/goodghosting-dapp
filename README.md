@@ -22,7 +22,10 @@ Launches the E2E tests
 
 `GENERAL`
 For the sake of semplicity I bootstrapped the application with create-react-app. Then I added
-typescript (just typed the surface, we can do a lot more), redux and web3
+typescript (just typed the surface, we can do a lot more), redux and web3.
+The architecture is very simple in this light app, i put in different location the components,
+the redux flow and the hooks which are responsible for the logi and the side effects (I do prefer
+to have different small hooks that talks to each other rather than less giant files).
 
 `CYPRESS`
 Handle browers extentions in a headless environment was a bit tricky; my solution is heavly
