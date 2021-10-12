@@ -28,15 +28,43 @@ module.exports = {
     return true;
   },
   async importWallet(secretWords, password) {
-    await puppeteer.waitAndClick('.unlock-page .unlock-page__links button');
+    if ((await puppeteer.metamaskWindow().$('.welcome-page__wrapper')) !== null) {
+        await puppeteer.waitAndClick('.welcome-page__wrapper button');
+        await puppeteer.waitAndClick('.first-time-flow__button');
+        await puppeteer.waitAndClick('.btn-primary');
+    } else {
+        await puppeteer.metamaskWindow().waitForTimeout(1000);
+        await puppeteer.waitAndClick('.unlock-page .unlock-page__links button');
+        await puppeteer.metamaskWindow().waitForTimeout(1000);
+
+        if ((await puppeteer.metamaskWindow().$('.unlock-page__form')) !== null) {
+          await puppeteer.waitAndType('.MuiInputBase-root #password', password);
+          await puppeteer.metamaskWindow().waitForTimeout(1000);
+          await puppeteer.waitAndClick('.unlock-page__form .MuiButton-containedSizeLarge')
+        }
+    }
+
     await puppeteer.waitAndType('.MuiInput-formControl input', secretWords);
     await puppeteer.waitAndType('.MuiInputBase-root #password', password);
     await puppeteer.waitAndType('.MuiInputBase-root #confirm-password', password);
+
+    if ((await puppeteer.metamaskWindow().$('.MuiFormControl-root + .first-time-flow__checkbox-container .first-time-flow__checkbox')) !== null) {
+      await puppeteer.waitAndClick('.MuiFormControl-root + .first-time-flow__checkbox-container .first-time-flow__checkbox')
+      await puppeteer.waitAndClick('.MuiFormControl-root + .first-time-flow__checkbox-container .first-time-flow__checkbox')
+    }
+
     await puppeteer.waitAndClick('.first-time-flow__button');
     await puppeteer.waitFor('.lds-spinner');
     if ((await puppeteer.metamaskWindow().$('.popover-header__button')) !== null) {
       await puppeteer.waitAndClick('.popover-header__button');
     }
+
+    await puppeteer.metamaskWindow().waitForTimeout(1000);
+
+    if ((await puppeteer.metamaskWindow().$('.first-time-flow__button')) !== null) {
+      await puppeteer.waitAndClick('.first-time-flow__button');
+    }
+
     return true;
   },
   async changeNetwork() {
